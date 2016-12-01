@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>VimL vs ECMAScript</title>
+	<style>
+		body {
+			background: #eee;
+			color: #333;
+			font-family: Arial, Verdana, sans-serif;
+		}
+		table {
+			background: #666;
+		}
+		td, th {
+			background: #eee;
+			padding: 10px;
+		}
+	</style>
+</head>
+
+<body>
+<h1>VimL vs ECMAScript</h1>
+<h2>You know JavaScript. You don't have time to properly learn VimL. This quick ref is for you.</h2>
+<table>
+	<thead>
+		<tr>
+			<th></th>
+			<th>VimL</th>
+			<th>ECMAScript</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+				<th></th>
+				<td></td>
+				<td></td>
+		</tr>
+		<tr>
+				<th>Variable definition</th>
+				<td>let</td>
+				<td>var, let, const</td>
+		</tr>
+		<tr>
+				<th>Variable visibility</th>
+				<td>
+					<ul>
+						<li>a:name variable received as arg in function</li>
+						<li>b:name variable local to a buffer</li>
+						<li>g:name global variable (also in a function)</li>
+						<li>s:name variable local to script</li>
+						<li>v:name variable predefined by Vim</li>
+						<li>w:name variable local to a window</li>
+					</ul>
+				</td>
+				<td>Function scope for var, block scope for let/const</td>
+		</tr>
+		<tr>
+				<th>Variable existence</th>
+				<td>exists("foo")</td>
+				<td>typeof foo !== 'undefined'</td>
+		</tr>
+		<tr>
+				<th>Condition</th>
+				<td>if cond<br>elseif cond<br>endif</td>
+				<td>if (cond) {<br>} else if (conf) {<br>}</td>
+		</tr>
+		<tr>
+				<th>Ternary operator (same)</th>
+				<td>a ? b : c</td>
+				<td>a ? b : c</td>
+		</tr>
+		<tr>
+			<th colspan="3">String</th>
+		</tr>
+		<tr>
+				<th>String concatenation</th>
+				<td>"foo" . "bar"</td>
+				<td>"foo" + "bar"</td>
+		</tr>
+		<tr>
+				<th>String match</th>
+				<td>foo =~ " "<br>foo !~ '\.$'</td>
+				<td>foo.includes(' ')<br>!foo.endsWith('.')</td>
+		</tr>
+		<tr>
+			<th colspan="3">Function</th>
+		</tr>
+		<tr>
+				<th>Function application</th>
+				<td>call foo('bar')</td>
+				<td>foo('bar')</td>
+		</tr>
+		<tr>
+				<th>Function definition</th>
+				<td>
+					Must start with a capital letter to avoid clash with native ones.
+					<pre>
+function Min(num1, num2)
+	if a:num1 < a:num2
+		let smaller = a:num1
+	else
+		let smaller = a:num2
+	endif
+	return smaller
+endfunction
+					</pre>
+					To redefine an existing function, use function!
+				</td>
+				<td>
+					<pre>
+function Min (num1, num2) {
+	var smaller
+	if (num1 < num2) {
+		smaller = num1
+	} else {
+		smaller = num2
+	}
+	return smaller
+}
+					</pre>
+				</td>
+		</tr>
+		<tr>
+				<th>Arguments / Rest params</th>
+				<td>
+					a:0 is the number of extraneous arguments<br>
+					a:1 the first one<br>
+					a:2 the second…<br>
+					a:000 is the list
+					<pre>
+function Show(start, ...)
+	echohl Title
+	echo "start is " . a:start
+	echohl None
+	let index = 1
+	while index <= a:0
+		echo "  Arg " . index . " is " . a:{index}
+		let index = index + 1
+	endwhile
+	echo ""
+endfunction
+					</pre>
+				</td>
+				<td>
+					<pre>
+function Show(start, ...args) {
+	echohl(Title)
+	echo "start is" + start
+	echohl(None)
+	let index = 1
+	while (index <= args.length) {
+		echo "  Arg " + index + " is " + args[index]
+		index = index + 1
+	}
+	echo ""
+}
+					</pre>
+				</td>
+		</tr>
+		<tr>
+			<th colspan="3">Array (List)</th>
+		</tr>
+		<tr>
+				<th>Array definition</th>
+				<td>let alist = ['foo', 'bar', 'quux']<br>call add(alist, 'yolo')</td>
+				<td>let alist = ['foo', 'bar', 'quux']<br>alist.push('yolo')</td>
+		</tr>
+		<tr>
+				<th>Array destructuring</th>
+				<td>let [foo, bar] = alist</td>
+				<td>let [foo, bar] = alist</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>
