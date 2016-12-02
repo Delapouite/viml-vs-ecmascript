@@ -167,9 +167,41 @@ function Show(start, ...args) {
 				<td>let alist = ['foo', 'bar', 'quux']<br>alist.push('yolo')</td>
 		</tr>
 		<tr>
-				<th>Array destructuring</th>
+				<th>Array destructuring (same)</th>
 				<td>let [foo, bar] = alist</td>
 				<td>let [foo, bar] = alist</td>
+		</tr>
+		<tr>
+				<th>Array map</th>
+				<td>
+					Need to make a copy first since map modify in place.<br>
+					<code>v:key</code> is also available.<br>
+					map() also works to iterate on objects.
+					<pre>
+let tlist = map(copy(mylist), ' v:val . "\t"')
+					</pre>
+				</td>
+				<td>
+					<pre>
+let tlist = mylist.map(val => val + '\t')
+					</pre>
+				</td>
+		</tr>
+		<tr>
+				<th>Array filter</th>
+				<td>
+					Need to make a copy first since map modify in place.<br>
+					<code>v:key</code> is also available.<br>
+					filter() also works to iterate on objects.
+					<pre>
+let tlist = filter(copy(mylist), 'v:val =~ "KEEP"')
+					</pre>
+				</td>
+				<td>
+					<pre>
+let tlist = mylist.filter(val => val.includes('KEEP'))
+					</pre>
+				</td>
 		</tr>
 	</tbody>
 </table>
